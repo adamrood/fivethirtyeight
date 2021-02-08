@@ -1,6 +1,5 @@
 import numpy as np
 from collections import Counter
-import pandas as pd
 import random
 
 across = [135, 45, 64, 280, 70]
