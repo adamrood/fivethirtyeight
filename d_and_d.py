@@ -1,32 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 
 def roll():
-    roll = np.random.randint(low = 1, high = 21, size = 2)
-    return roll
-
-def roll_w_advantage():
-    a = max(roll())
-    return a
-
-def roll_w_disadvantage():
-    d = min(roll())
-    return d
+    return np.random.randint(low = 1, high = 21, size = 2)
 
 def roll_w_advantage_of_disadvantage():
-    ad1 = min(roll())
-    ad2 = min(roll())
-    return max(ad1,ad2)
+    return max(min(roll()),min(roll()))
 
 def roll_w_disadvantage_of_advantage():
-    ad1 = max(roll())
-    ad2 = max(roll())
-    return min(ad1,ad2)
+    return min(max(roll()),max(roll()))
 
 def single_roll():
-    roll = np.random.randint(low = 1, high = 21, size = 1)
-    return min(roll)
+    return np.random.randint(low = 1, high = 21, size = 1)
+
+def show_pdf():
+    plt.title('Probability density function:  D&D roll methods')
+    plt.xlabel('roll value')
+    plt.ylabel('probability')
+    sns.distplot(single, hist = False, bins = 20, kde = True, kde_kws={'bw': 1}, label = 'single roll')
+    sns.distplot(aod, hist = False, bins = 20, kde = True, kde_kws={'bw': 1}, label = 'ad of dis')
+    sns.distplot(doa, hist = False, bins = 20, kde = True, kde_kws={'bw': 1}, label = 'dis of ad')
+    plt.xlim(0,21)
+    plt.xticks(range(1,21))
+    plt.ylim(0,.1)
+    plt.yticks(np.arange(0,.11,.01))
+    plt.legend(loc='best')
+    plt.show()
 
 def show_histogram():
     plt.hist(single, bins = range(1,22), label = 'single roll', alpha = 0.7)
@@ -41,16 +42,16 @@ def show_histogram():
     plt.xticks(range(1,21))
     plt.show()
 
-sim_no = 100000
-single = []
-aod = []
-doa = []
+sim_no = 10**5
+single, aod, doa = [],[],[]
+
 for x in range(sim_no):
     single.append(single_roll())
     aod.append(roll_w_advantage_of_disadvantage())
     doa.append(roll_w_disadvantage_of_advantage())
 
 show_histogram()
+show_pdf()
 print('Number of simulations:', format(sim_no,',d'))
 print('Single roll:', round(sum(single)/len(single),2))
 print('Advantage of disadvantage:', round(sum(aod)/len(aod),2))
@@ -58,15 +59,11 @@ print('Disadvantage of advantage:', round(sum(doa)/len(doa),2))
 
 #Extra Credit
 
-sim_no = 50000
-probs_s = []
-probs_a = []
-probs_d = []
+sim_no = 10**4
+probs_s, probs_a, probs_d = [],[],[]
 
 for n in range(1,21):
-    count_s = 0
-    count_a = 0
-    count_d = 0
+    count_s, count_a, count_d = 0, 0, 0
     for x in range(sim_no):
         sr = single_roll()
         ad = roll_w_advantage_of_disadvantage()
