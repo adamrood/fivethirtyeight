@@ -4,10 +4,10 @@
 
 import numpy as np
 
-hour = [x.zfill(2) for x in np.arange(1, 12 + 1, 1).astype(str)]
-minute = [x.zfill(2) for x in np.arange(0, 60 + 1, 1).astype(str)]
-second = [x.zfill(2) for x in np.arange(0, 60 + 1, 1).astype(str)]
-year = list(np.arange(2031, 9999 + 1, 1).astype(str))
+hour = [x.zfill(2) for x in np.arange(1, 12 + 1, 1).astype(str) if len(set(x.zfill(2))) == 2]
+minute = [x.zfill(2) for x in np.arange(0, 60 + 1, 1).astype(str) if len(set(x.zfill(2))) == 2]
+second = [x.zfill(2) for x in np.arange(0, 60 + 1, 1).astype(str) if len(set(x.zfill(2))) == 2]
+year = [x for x in np.arange(2022, 9999 + 1, 1).astype(str) if len(set(x)) == 4]
 
 for w in year:
     for x in hour:
